@@ -1,8 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import 'materialize-css/dist/css/materialize.min.css';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
+import App from './components/App';
+import reducers from './reducers';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
+
+// console.log('STRIP_KEY: ', process.env.REACT_APP_STRIPE_KEY);
+// console.log('Environment: ', process.env.NODE_ENV);
